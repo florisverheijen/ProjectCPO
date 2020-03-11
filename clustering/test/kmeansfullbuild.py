@@ -12,14 +12,14 @@ import matplotlib.pyplot as plt
 
 #initialisation 
 df = pd.DataFrame({
-    'x': [12, 20, 28, 18, 29, 33, 24, 45, 45, 52, 51, 52, 55, 53, 55, 61, 64, 69, 72,72,70,79,68,65],
-    'y': [39, 36, 30, 52, 54, 46, 55, 59, 63, 70, 66, 63, 58, 23, 14, 8, 19, 7, 24,42,45,62,55,59]
+    'x': [12, 20, 28, 18, 29, 33, 24, 45, 45, 52, 51, 52, 55, 53, 55, 61, 64, 69, 72, 72, 70, 79, 68, 65],
+    'y': [39, 36, 30, 52, 54, 46, 55, 59, 63, 70, 66, 63, 58, 23, 14, 8, 19, 7, 24, 42, 45, 62, 55, 59]
 })  # simple dataset to start of with later this should be replaced for the comumns we have in our big dataset
 
 # this makes sure that the random numbers are the same every time you run it can be deleted when the dataset is found
 np.random.seed(200) 
 
-k = 3 #number of centroids
+k = 4 #number of centroids
 # centroids[i] = [x, y]
 centroids = {
     i+1: [np.random.randint(0, 80), np.random.randint(0, 80)]
@@ -66,3 +66,4 @@ for i in centroids.keys():
 plt.xlim(0, 80)
 plt.ylim(0, 80)
 plt.show()
+

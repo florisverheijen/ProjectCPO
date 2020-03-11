@@ -12,29 +12,29 @@ import copy
 
 #initialisation 
 df = pd.DataFrame({
-    'x': [12, 20, 28, 18, 29, 33, 24, 45, 45, 52, 51, 52, 55, 53, 55, 61, 64, 69, 72],
-    'y': [39, 36, 30, 52, 54, 46, 55, 59, 63, 70, 66, 63, 58, 23, 14, 8, 19, 7, 24]
+    'x': [12, 20, 28, 18, 29, 33, 24, 45, 45, 52, 51, 52, 55, 53, 55, 61, 64, 69, 72, 72, 70, 79, 68, 65],
+    'y': [39, 36, 30, 52, 54, 46, 55, 59, 63, 70, 66, 63, 58, 23, 14, 8, 19, 7, 24, 42, 45, 62, 55, 59]
 })  # simple dataset to start of with later this should be replaced for the comumns we have in our big dataset
 
 # this makes sure that the random numbers are the same every time you run it can be deleted when the dataset is found
 np.random.seed(200) 
 
-k = 3 #number of centroids
+k = 4 #number of centroids
 # centroids[i] = [x, y]
 centroids = {
     i+1: [np.random.randint(0, 80), np.random.randint(0, 80)]
     for i in range(k)
 }
   
-# make a figure to make it visible  
-#fig = plt.figure(figsize=(5, 5))
-#plt.scatter(df['x'], df['y'], color='k')
+ #make a figure to make it visible  
+fig = plt.figure(figsize=(5, 5))
+plt.scatter(df['x'], df['y'], color='k')
 colmap = {1: 'r', 2: 'g', 3: 'b',4:'m'} # so you can see the centroids you just created and can assign this color to the other points
-#for i in centroids.keys():
-#    plt.scatter(*centroids[i], color=colmap[i])
-#plt.xlim(0, 80)
-#plt.ylim(0, 80)
-#plt.show()
+for i in centroids.keys():
+    plt.scatter(*centroids[i], color=colmap[i])
+plt.xlim(0, 80)
+plt.ylim(0, 80)
+plt.show()
 
 # assining the points to a cluster
 
@@ -57,15 +57,15 @@ def assignment(df, centroids):
     return df
 
 df = assignment(df, centroids) #check if it worked by printing the first 5/head of the dataFrame
-#print(df.head())
-#
-#fig = plt.figure(figsize=(5, 5))
-#plt.scatter(df['x'], df['y'], color=df['color'], alpha=0.5) # alpha is set to 0.5 to show the difference between a normal point and the cluster point 
-#for i in centroids.keys():
-#    plt.scatter(*centroids[i], color=colmap[i])
-#plt.xlim(0, 80)
-#plt.ylim(0, 80)
-#plt.show()
+print(df.head())
+
+fig = plt.figure(figsize=(5, 5))
+plt.scatter(df['x'], df['y'], color=df['color'], alpha=0.5) # alpha is set to 0.5 to show the difference between a normal point and the cluster point 
+for i in centroids.keys():
+    plt.scatter(*centroids[i], color=colmap[i])
+plt.xlim(0, 80)
+plt.ylim(0, 80)
+plt.show()
 
 # now you need to update this so that the cluster points go to a better suited location.
 #after this you can also optimise for better results 
@@ -81,7 +81,7 @@ centroids = update(centroids)
     
 fig = plt.figure(figsize=(5, 5))
 ax = plt.axes()
-plt.scatter(df['x'], df['y'], color=df['color'], alpha=0.5, edgecolor='k')
+plt.scatter(df['x'], df['y'], color=df['color'], alpha=0.5)
 for i in centroids.keys():
     plt.scatter(*centroids[i], color=colmap[i])
 plt.xlim(0, 80)
@@ -102,7 +102,7 @@ df = assignment(df,centroids)
 
 # Plot results
 fig = plt.figure(figsize=(5, 5))
-plt.scatter(df['x'], df['y'], color=df['color'], alpha=0.5, edgecolor='k')
+plt.scatter(df['x'], df['y'], color=df['color'], alpha=0.5)
 for i in centroids.keys():
     plt.scatter(*centroids[i], color=colmap[i])
 plt.xlim(0, 80)
@@ -131,16 +131,15 @@ plt.show()
 """
 full program finished :
 """
-#import all libraries you need here:
 #import pandas as pd
 #import numpy as np
 #import matplotlib.pyplot as plt
-#import copy
+#
 #
 ##initialisation 
 #df = pd.DataFrame({
-#    'x': [12, 20, 28, 18, 29, 33, 24, 45, 45, 52, 51, 52, 55, 53, 55, 61, 64, 69, 72],
-#    'y': [39, 36, 30, 52, 54, 46, 55, 59, 63, 70, 66, 63, 58, 23, 14, 8, 19, 7, 24]
+#    'x': [12, 20, 28, 18, 29, 33, 24, 45, 45, 52, 51, 52, 55, 53, 55, 61, 64, 69, 72,72,70,79,68,65],
+#    'y': [39, 36, 30, 52, 54, 46, 55, 59, 63, 70, 66, 63, 58, 23, 14, 8, 19, 7, 24,42,45,62,55,59]
 #})  # simple dataset to start of with later this should be replaced for the comumns we have in our big dataset
 #
 ## this makes sure that the random numbers are the same every time you run it can be deleted when the dataset is found
@@ -157,7 +156,7 @@ full program finished :
 #
 #def assignment(df, centroids):
 #    for i in centroids.keys():
-#        # sqrt((x1 - x2)^2 - (y1 - y2)^2)
+#        # sqrt((x1 - x2)^2 - (y1 - y2)^2) euclidian distance 
 #        df['distance_from_{}'.format(i)] = (
 #            np.sqrt(
 #                (df['x'] - centroids[i][0]) ** 2
@@ -170,18 +169,14 @@ full program finished :
 #    df['color'] = df['closest'].map(lambda x: colmap[x])
 #    return df
 #
-#df = assignment(df, centroids) #check if it worked by printing the first 5/head of the dataFrame
+#df = assignment(df, centroids) #assign it the first time
 #
-#old_centroids = copy.deepcopy(centroids) # you safe the old centroids so you can use them to place the new once better
 #def update(k): #here you update the centroid location to the mean of all points that were in that cluster so you differentiate even more
 #    for i in centroids.keys():
 #        centroids[i][0] = np.mean(df[df['closest'] == i]['x'])
 #        centroids[i][1] = np.mean(df[df['closest'] == i]['y'])
 #    return k
 #
-#centroids = update(centroids)
-#
-#df = assignment(df,centroids)
 #
 #while True:
 #    closest_centroids = df['closest'].copy(deep=True)
@@ -197,6 +192,7 @@ full program finished :
 #plt.xlim(0, 80)
 #plt.ylim(0, 80)
 #plt.show()
+
 
 
 
