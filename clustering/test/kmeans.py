@@ -8,7 +8,7 @@ Created on Wed Mar 11 09:02:26 2020
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import copy
+
 
 #initialisation 
 df = pd.DataFrame({
@@ -19,7 +19,7 @@ df = pd.DataFrame({
 # this makes sure that the random numbers are the same every time you run it can be deleted when the dataset is found
 np.random.seed(200) 
 
-k = 4 #number of centroids
+k = 3 #number of centroids
 # centroids[i] = [x, y]
 centroids = {
     i+1: [np.random.randint(0, 80), np.random.randint(0, 80)]
@@ -70,7 +70,7 @@ plt.show()
 # now you need to update this so that the cluster points go to a better suited location.
 #after this you can also optimise for better results 
 
-old_centroids = copy.deepcopy(centroids) # you safe the old centroids so you can use them to place the new once better
+
 def update(k): #here you update the centroid location to the mean of all points that were in that cluster so you differentiate even more
     for i in centroids.keys():
         centroids[i][0] = np.mean(df[df['closest'] == i]['x'])
@@ -86,12 +86,6 @@ for i in centroids.keys():
     plt.scatter(*centroids[i], color=colmap[i])
 plt.xlim(0, 80)
 plt.ylim(0, 80)
-for i in old_centroids.keys():
-    old_x = old_centroids[i][0]
-    old_y = old_centroids[i][1]
-    dx = (centroids[i][0] - old_centroids[i][0]) * 0.75
-    dy = (centroids[i][1] - old_centroids[i][1]) * 0.75
-plt.show()
 
 # now this is done we can repeat the assignment of the datapoints to make the clusters better. 
 # because we made a function of the assignment we dob't have to do it all again.
