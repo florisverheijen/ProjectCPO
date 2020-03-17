@@ -68,7 +68,7 @@ plt.ylim(0, 80)
 plt.show()
 
 # now you need to update this so that the cluster points go to a better suited location.
-#after this you can also optimise for better results 
+# after this you can also optimise for better results 
 
 
 def update(k): #here you update the centroid location to the mean of all points that were in that cluster so you differentiate even more
